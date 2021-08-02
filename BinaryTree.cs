@@ -23,6 +23,20 @@ namespace BinaryTreePayroll
             set => root = value;
         }
 
+        //Adding new data into AVL tree and rebalances using BalanceTree() and Rotate methods
+        public void Add(string data)
+        {
+            Node newItem = new Node(data);
+            if (root == null)
+            {
+                root = newItem;
+            }
+            else
+            {
+                root = AddRecursive(root, newItem);
+            }
+        }
+
         private Node AddRecursive(Node cur, Node n)
         {
             if (cur == null)
@@ -33,12 +47,233 @@ namespace BinaryTreePayroll
             else if (string.Compare(n.gsData, cur.gsData) < 0)
             {
                 cur.gsLeft = AddRecursive(cur.gsLeft, n);
-                
+                cur = BalanceTree(cur);
+            }
+            else if (string.Compare(n.gsData, cur.gsData) > 0)
+            {
+                cur.gsRight = AddRecursive(cur.gsRight, n);
+                cur = BalanceTree(cur);
             }
 
             return cur;
         }
 
-        private Node 
+        private Node BalanceTree(Node cur)
+        {
+            int bFactor = BalanceFactor(cur);
+            if (bFactor > 1)
+            {
+                if (BalanceFactor(cur.gsLeft) > 0)
+                {
+                    cur = RotateLL(cur);
+                }
+                else
+                {
+                    cur = RotateLR(cur);
+                }
+            }
+            else if (bFactor < -1)
+            {
+                if (BalanceFactor(cur.gsRight) > 0)
+                {
+                    cur = RotateRL(cur);
+                }
+                else
+                {
+                    cur = RotateRR(cur);
+                }
+            }
+            return cur;
+        }
+
+        public void Delete(string target)
+        {
+            root = DeleteNode(root, target);
+        }
+
+        private Node DeleteNode(Node cur, string target)
+        {
+            Node parent;
+
+            if (cur == null)
+            {
+                return null;
+            }
+            else
+            {
+                //Left subtree
+                if (string.Compare(target, cur.gsData) < 0)
+                {
+                    cur.gsLeft = DeleteNode(cur.gsLeft, target);
+                    if (BalanceFactor(cur) == -2)
+                    {
+                        cur = RotateRR(cur);
+                    }
+                    else
+                    {
+                        cur = RotateRL(cur);
+                    }
+                }
+                //Right subtree
+                else if (string.Compare(target, cur.gsData) > 0)
+                {
+                    cur.gsRight = DeleteNode(cur.gsRight, target);
+                    if (BalanceFactor(cur) == 2)
+                    {
+                        if (BalanceFactor(cur.gsLeft) >= 0)
+                        {
+                            cur = RotateLL(cur);
+                        }
+                        else
+                        {
+                            cur = RotateLR(cur);
+                        }
+                    }
+                }
+                //If target is found
+                else
+                {
+                    if (cur.gsRight != null)
+                    {
+                        parent = cur.gsRight;
+                        while (parent.gsLeft != null)
+                        {
+                            parent = parent.gsLeft;
+                        }
+                        cur.gsData = parent.gsData;
+                        cur.gsRight = DeleteNode(cur.gsRight, parent.gsData);
+                        if (BalanceFactor(cur) == 2) //Rebalancing
+                        {
+                            if (BalanceFactor(cur.gsLeft) >= 0)
+                            {
+                                cur = RotateLL(cur);
+                            }
+                            else
+                            {
+                                cur = RotateLR(cur);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return cur.gsLeft;
+                    }
+                }
+            }
+
+            return cur.gsLeft;
+        }
+
+        private int BalanceFactor(Node cur)
+        {
+            int l = getHeight(cur.gsLeft);
+            int r = getHeight(cur.gsRight);
+            int bFactor = l - r;
+            return bFactor;
+        }
+
+        private Node RotateRR(Node parent)
+        {
+            Node pivot = parent.gsRight;
+            parent.gsRight = pivot.gsLeft;
+            pivot.gsLeft = parent;
+            return pivot;
+        }
+        private Node RotateLL(Node parent)
+        {
+            Node pivot = parent.gsLeft;
+            parent.gsLeft = pivot.gsRight;
+            pivot.gsRight = parent;
+            return pivot;
+        }
+        private Node RotateLR(Node parent)
+        {
+            Node pivot = parent.gsLeft;
+            parent.gsLeft = RotateRR(pivot);
+            return RotateLL(parent);
+        }
+        private Node RotateRL(Node parent)
+        {
+            Node pivot = parent.gsRight;
+            parent.gsRight = RotateLL(pivot);
+            return RotateRR(parent);
+        }
+
+        private int max(int l, int r)
+        {
+            return l > r ? l : r;
+        }
+
+        private int getHeight(Node cur)
+        {
+            int height = 0;
+            if (cur != null)
+            {
+                int l = getHeight(cur.gsLeft);
+                int r = getHeight(cur.gsRight);
+                int m = max(l, r);
+                height = m + 1;
+            }
+
+            return height;
+        }
+
+        public void Find(string key)
+        {
+            if (FindRecursive(key, root).gsData == key)
+            {
+                Console.WriteLine("{0} was found!", key);
+            }
+            else
+            {
+                Console.WriteLine("Nothing found!");
+            }
+        }
+
+        private Node FindRecursive(string target, Node cur)
+        {
+            if (string.Compare(target, cur.gsData) < 0)
+            {
+                if (target == cur.gsData)
+                {
+                    return cur;
+                }
+                else
+                    return FindRecursive(target, cur.gsLeft);
+            }
+            else
+            {
+                if (target == cur.gsData)
+                {
+                    return cur;
+                }
+                else
+                    return FindRecursive(target, cur.gsRight);
+            }
+        }
+
+        public String Display()
+        {
+            if (root == null)
+            {
+                Console.WriteLine("Tree is empty");
+                return "Tree is empty";
+            }
+
+            return DisplayInOrder(root);
+        }
+
+        private string DisplayInOrder(Node cur)
+        {
+            string s = "";
+            if (cur != null)
+            {
+                s = DisplayInOrder(cur.gsLeft);
+                Console.Write("({0}) ", cur.gsData);
+                s += DisplayInOrder(cur.gsRight);
+                //Console.Write("({0}) ", current.data);
+            }
+            return s;
+        }
     }
 }
