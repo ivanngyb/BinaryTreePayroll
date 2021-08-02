@@ -26,11 +26,13 @@ namespace BinaryTreePayroll
 
         public void AddEmployee(string value)
         {
+
             try
             {
                 bTree.Add(value);
                 DisplayEmployee();
                 UpdateStatusLabel("Employee " + value + " added successfully");
+                ClearReset();
             }
             catch (Exception e)
             {
@@ -46,6 +48,7 @@ namespace BinaryTreePayroll
                 bTree.Delete(value);
                 DisplayEmployee();
                 UpdateStatusLabel("Employee " + value + " deleted successfully");
+                ClearReset();
             }
             catch (Exception e)
             {
@@ -67,6 +70,7 @@ namespace BinaryTreePayroll
                         ListBoxEmployee.SelectedIndex = i;
                     }
                 }
+                ClearReset();
             }
             else
             {
@@ -110,6 +114,13 @@ namespace BinaryTreePayroll
 
             DisplayEmployee();
             UpdateRootText();
+            ButtonPrefill.Enabled = false;
+        }
+
+        public void ClearReset() 
+        {
+            TextBoxInput.Clear();
+            TextBoxInput.Focus();
         }
 
         public void UpdateStatusLabel(string text)
@@ -119,17 +130,42 @@ namespace BinaryTreePayroll
 
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
-            AddEmployee(TextBoxInput.Text);
+            if (!string.IsNullOrEmpty(TextBoxInput.Text))
+            {
+                AddEmployee(TextBoxInput.Text);
+            }
+            else
+            {
+                UpdateStatusLabel("Please enter an employee name to add");
+            }
         }
 
         private void ButtonRemove_Click(object sender, EventArgs e)
         {
-            DeleteEmployee(TextBoxInput.Text);
+            if (!string.IsNullOrEmpty(TextBoxInput.Text))
+            {
+                DeleteEmployee(TextBoxInput.Text);
+            }
+            else if (ListBoxEmployee.SelectedIndex >= 0)
+            {
+                DeleteEmployee(ListBoxEmployee.Items[ListBoxEmployee.SelectedIndex].ToString());
+            }
+            else
+            {
+                UpdateStatusLabel("Please select or enter an employee to delete");
+            }
         }
 
         private void ButtonSearch_Click(object sender, EventArgs e)
         {
-            FindEmployee(TextBoxInput.Text);
+            if (!string.IsNullOrEmpty(TextBoxInput.Text))
+            {
+                FindEmployee(TextBoxInput.Text);
+            }
+            else
+            {
+                UpdateStatusLabel("Please enter an employee name to search");
+            }
         }
 
         private void ButtonPrefill_Click(object sender, EventArgs e)

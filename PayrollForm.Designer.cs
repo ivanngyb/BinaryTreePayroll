@@ -163,6 +163,7 @@ namespace BinaryTreePayroll
             this.Controls.Add(this.ButtonRemove);
             this.Controls.Add(this.ButtonAdd);
             this.Controls.Add(this.ListBoxEmployee);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "PayrollForm";
             this.Text = "Payroll Form";
             this.statusStrip1.ResumeLayout(false);

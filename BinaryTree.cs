@@ -284,12 +284,8 @@ namespace BinaryTreePayroll
             if (cur != null)
             {
                 s = DisplayInOrder(cur.gsLeft, listBox);
-
-                //Console.Write("({0}) ", cur.gsData);
                 listBox.Items.Add(cur.gsData);
                 s = DisplayInOrder(cur.gsRight, listBox);
-
-                //Console.Write("({0}) ", current.data);
             }
             return s;
         }
