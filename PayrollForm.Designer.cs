@@ -35,18 +35,19 @@ namespace BinaryTreePayroll
             this.ButtonSearch = new System.Windows.Forms.Button();
             this.ButtonPrefill = new System.Windows.Forms.Button();
             this.LabelRoot = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.TextBoxRoot = new System.Windows.Forms.TextBox();
             this.TextBoxInput = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.StatusLabelText = new System.Windows.Forms.ToolStripStatusLabel();
+            this.StatusStripLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ListBoxEmployee
             // 
             this.ListBoxEmployee.FormattingEnabled = true;
-            this.ListBoxEmployee.Location = new System.Drawing.Point(12, 217);
+            this.ListBoxEmployee.Location = new System.Drawing.Point(12, 220);
             this.ListBoxEmployee.Name = "ListBoxEmployee";
             this.ListBoxEmployee.Size = new System.Drawing.Size(276, 225);
             this.ListBoxEmployee.TabIndex = 0;
@@ -59,6 +60,7 @@ namespace BinaryTreePayroll
             this.ButtonAdd.TabIndex = 1;
             this.ButtonAdd.Text = "Add Employee";
             this.ButtonAdd.UseVisualStyleBackColor = true;
+            this.ButtonAdd.Click += new System.EventHandler(this.ButtonAdd_Click);
             // 
             // ButtonRemove
             // 
@@ -68,6 +70,7 @@ namespace BinaryTreePayroll
             this.ButtonRemove.TabIndex = 1;
             this.ButtonRemove.Text = "Remove Employee";
             this.ButtonRemove.UseVisualStyleBackColor = true;
+            this.ButtonRemove.Click += new System.EventHandler(this.ButtonRemove_Click);
             // 
             // ButtonSearch
             // 
@@ -77,6 +80,7 @@ namespace BinaryTreePayroll
             this.ButtonSearch.TabIndex = 1;
             this.ButtonSearch.Text = "Search Employee";
             this.ButtonSearch.UseVisualStyleBackColor = true;
+            this.ButtonSearch.Click += new System.EventHandler(this.ButtonSearch_Click);
             // 
             // ButtonPrefill
             // 
@@ -86,6 +90,7 @@ namespace BinaryTreePayroll
             this.ButtonPrefill.TabIndex = 1;
             this.ButtonPrefill.Text = "Prefill Employees";
             this.ButtonPrefill.UseVisualStyleBackColor = true;
+            this.ButtonPrefill.Click += new System.EventHandler(this.ButtonPrefill_Click);
             // 
             // LabelRoot
             // 
@@ -96,13 +101,13 @@ namespace BinaryTreePayroll
             this.LabelRoot.TabIndex = 2;
             this.LabelRoot.Text = "Root: ";
             // 
-            // textBox1
+            // TextBoxRoot
             // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(46, 192);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(242, 20);
-            this.textBox1.TabIndex = 3;
+            this.TextBoxRoot.Enabled = false;
+            this.TextBoxRoot.Location = new System.Drawing.Point(46, 192);
+            this.TextBoxRoot.Name = "TextBoxRoot";
+            this.TextBoxRoot.Size = new System.Drawing.Size(242, 20);
+            this.TextBoxRoot.TabIndex = 3;
             // 
             // TextBoxInput
             // 
@@ -110,6 +115,7 @@ namespace BinaryTreePayroll
             this.TextBoxInput.Name = "TextBoxInput";
             this.TextBoxInput.Size = new System.Drawing.Size(276, 20);
             this.TextBoxInput.TabIndex = 4;
+            this.TextBoxInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxInput_KeyPress);
             // 
             // label1
             // 
@@ -124,7 +130,8 @@ namespace BinaryTreePayroll
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StatusLabelText});
+            this.StatusLabelText,
+            this.StatusStripLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 460);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(306, 22);
@@ -136,6 +143,11 @@ namespace BinaryTreePayroll
             this.StatusLabelText.Name = "StatusLabelText";
             this.StatusLabelText.Size = new System.Drawing.Size(0, 17);
             // 
+            // StatusStripLabel
+            // 
+            this.StatusStripLabel.Name = "StatusStripLabel";
+            this.StatusStripLabel.Size = new System.Drawing.Size(0, 17);
+            // 
             // PayrollForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -144,7 +156,7 @@ namespace BinaryTreePayroll
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.TextBoxInput);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.TextBoxRoot);
             this.Controls.Add(this.LabelRoot);
             this.Controls.Add(this.ButtonPrefill);
             this.Controls.Add(this.ButtonSearch);
@@ -168,11 +180,12 @@ namespace BinaryTreePayroll
         private System.Windows.Forms.Button ButtonSearch;
         private System.Windows.Forms.Button ButtonPrefill;
         private System.Windows.Forms.Label LabelRoot;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox TextBoxRoot;
         private System.Windows.Forms.TextBox TextBoxInput;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel StatusLabelText;
+        private System.Windows.Forms.ToolStripStatusLabel StatusStripLabel;
     }
 }
 

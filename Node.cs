@@ -30,8 +30,8 @@ namespace BinaryTreePayroll
 
         public string gsData
         {
-            get => this.gsData;
-            set => this.gsData = value;
+            get => this.data;
+            set => this.data = value;
         }
 
         public Node gsLeft

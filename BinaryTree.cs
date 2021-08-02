@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 //Name: Yang Beng Ng (Ivan)
 //ID: 30031552
@@ -101,21 +102,27 @@ namespace BinaryTreePayroll
             }
             else
             {
+                string lowTarget = target.ToLower();
+                string lowData = cur.gsData.ToLower();
                 //Left subtree
-                if (string.Compare(target, cur.gsData) < 0)
+                if (string.Compare(lowTarget, lowData) < 0)
                 {
                     cur.gsLeft = DeleteNode(cur.gsLeft, target);
                     if (BalanceFactor(cur) == -2)
                     {
-                        cur = RotateRR(cur);
+                        if (BalanceFactor(cur.gsRight) <= 0)
+                        {
+                            cur = RotateRR(cur);
+                        }
+                        else
+                        {
+                            cur = RotateRL(cur);
+                        }
                     }
-                    else
-                    {
-                        cur = RotateRL(cur);
-                    }
+
                 }
                 //Right subtree
-                else if (string.Compare(target, cur.gsData) > 0)
+                else if (string.Compare(lowTarget, lowData) > 0)
                 {
                     cur.gsRight = DeleteNode(cur.gsRight, target);
                     if (BalanceFactor(cur) == 2)
@@ -161,13 +168,13 @@ namespace BinaryTreePayroll
                 }
             }
 
-            return cur.gsLeft;
+            return cur;
         }
 
         private int BalanceFactor(Node cur)
         {
-            int l = getHeight(cur.gsLeft);
-            int r = getHeight(cur.gsRight);
+            int l = GetHeight(cur.gsLeft);
+            int r = GetHeight(cur.gsRight);
             int bFactor = l - r;
             return bFactor;
         }
@@ -199,60 +206,68 @@ namespace BinaryTreePayroll
             return RotateRR(parent);
         }
 
-        private int max(int l, int r)
+        private int Max(int l, int r)
         {
             return l > r ? l : r;
         }
 
-        private int getHeight(Node cur)
+        private int GetHeight(Node cur)
         {
             int height = 0;
             if (cur != null)
             {
-                int l = getHeight(cur.gsLeft);
-                int r = getHeight(cur.gsRight);
-                int m = max(l, r);
+                int l = GetHeight(cur.gsLeft);
+                int r = GetHeight(cur.gsRight);
+                int m = Max(l, r);
                 height = m + 1;
             }
 
             return height;
         }
 
-        public void Find(string key)
+        public bool Find(string key)
         {
-            if (FindRecursive(key, root).gsData == key)
+            if (FindRecursive(key, root) != null)
             {
-                Console.WriteLine("{0} was found!", key);
+                if (FindRecursive(key, root).gsData.ToLower() == key.ToLower())
+                {
+                    return true;
+                    //Console.WriteLine("{0} was found!", key);
+                }
             }
-            else
-            {
-                Console.WriteLine("Nothing found!");
-            }
+
+            return false;
         }
 
         private Node FindRecursive(string target, Node cur)
         {
-            if (string.Compare(target, cur.gsData) < 0)
+            if (cur != null)
             {
-                if (target == cur.gsData)
+                string lowTarget = target.ToLower();
+                string lowData = cur.gsData.ToLower();
+                if (string.Compare(lowTarget, lowData) < 0)
                 {
-                    return cur;
+                    if (lowTarget.Equals(lowData))
+                    {
+                        return cur;
+                    }
+                    else
+                        return FindRecursive(target, cur.gsLeft);
                 }
                 else
-                    return FindRecursive(target, cur.gsLeft);
-            }
-            else
-            {
-                if (target == cur.gsData)
                 {
-                    return cur;
+                    if (lowTarget.Equals(lowData))
+                    {
+                        return cur;
+                    }
+                    else
+                        return FindRecursive(target, cur.gsRight);
                 }
-                else
-                    return FindRecursive(target, cur.gsRight);
             }
+            return null;
         }
 
-        public String Display()
+        public string Display(ListBox listBox)
         {
             if (root == null)
             {
@@ -260,17 +275,20 @@ namespace BinaryTreePayroll
                 return "Tree is empty";
             }
 
-            return DisplayInOrder(root);
+            return DisplayInOrder(root, listBox);
         }
 
-        private string DisplayInOrder(Node cur)
+        private string DisplayInOrder(Node cur, ListBox listBox)
         {
             string s = "";
             if (cur != null)
             {
-                s = DisplayInOrder(cur.gsLeft);
-                Console.Write("({0}) ", cur.gsData);
-                s += DisplayInOrder(cur.gsRight);
+                s = DisplayInOrder(cur.gsLeft, listBox);
+
+                //Console.Write("({0}) ", cur.gsData);
+                listBox.Items.Add(cur.gsData);
+                s = DisplayInOrder(cur.gsRight, listBox);
+
                 //Console.Write("({0}) ", current.data);
             }
             return s;
