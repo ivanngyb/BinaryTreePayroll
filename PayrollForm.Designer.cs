@@ -1,7 +1,7 @@
 ﻿
 namespace BinaryTreePayroll
 {
-    partial class Form1
+    partial class PayrollForm
     {
         /// <summary>
         /// Required designer variable.
