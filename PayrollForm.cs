@@ -47,10 +47,17 @@ namespace BinaryTreePayroll
         {
             try
             {
-                bTree.Delete(value);
-                DisplayEmployee();
-                UpdateStatusLabel("Employee " + value + " deleted successfully");
-                ClearReset();
+                if (bTree.Find(value))
+                {
+                    bTree.Delete(value);
+                    DisplayEmployee();
+                    UpdateStatusLabel("Employee " + value + " deleted successfully");
+                    ClearReset();
+                }
+                else 
+                {
+                    UpdateStatusLabel("Error removing employee (can't find " + value + ")");
+                }
             }
             catch (Exception e)
             {
