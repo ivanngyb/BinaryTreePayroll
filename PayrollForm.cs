@@ -24,6 +24,7 @@ namespace BinaryTreePayroll
             InitializeComponent();
         }
 
+        //Function for adding employeess 
         public void AddEmployee(string value)
         {
 
@@ -41,6 +42,7 @@ namespace BinaryTreePayroll
             }
         }
 
+        //Function for deleting employees
         public void DeleteEmployee(string value)
         {
             try
@@ -58,8 +60,10 @@ namespace BinaryTreePayroll
             
         }
 
+        //Fuunction for finding employees
         public void FindEmployee(string value)
         {
+            //If value is found highlight value in listbox
             if (bTree.Find(value))
             {
                 UpdateStatusLabel("Employee " + value + " was found!");
@@ -78,6 +82,7 @@ namespace BinaryTreePayroll
             }
         }
 
+        //Function for displaying employees
         public void DisplayEmployee()
         {
             try
@@ -93,11 +98,13 @@ namespace BinaryTreePayroll
             }
         }
 
+        //Changing the root text
         public void UpdateRootText()
         {
             TextBoxRoot.Text = bTree.gsRoot.gsData;
         }
 
+        //Prefill a list of employees into binary tree
         public void PrefillEmployee()
         {
             bTree.Add("Liam");
@@ -116,6 +123,7 @@ namespace BinaryTreePayroll
             UpdateRootText();
             ButtonPrefill.Enabled = false;
         }
+        //Resetting text fields
 
         public void ClearReset() 
         {
@@ -123,11 +131,13 @@ namespace BinaryTreePayroll
             TextBoxInput.Focus();
         }
 
+        //Function to update status label
         public void UpdateStatusLabel(string text)
         {
             StatusStripLabel.Text = text;
         }
 
+        //Button click function for adding employee
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(TextBoxInput.Text))
@@ -140,6 +150,7 @@ namespace BinaryTreePayroll
             }
         }
 
+        //Button click function for removing employee
         private void ButtonRemove_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(TextBoxInput.Text))
@@ -156,6 +167,7 @@ namespace BinaryTreePayroll
             }
         }
 
+        //Button click function for searching employee
         private void ButtonSearch_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(TextBoxInput.Text))
@@ -168,11 +180,13 @@ namespace BinaryTreePayroll
             }
         }
 
+        //Button to prefill tree with employees
         private void ButtonPrefill_Click(object sender, EventArgs e)
         {
             PrefillEmployee();
         }
 
+        //Text box function to handle input type to only allow letters
         private void TextBoxInput_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsLetter(e.KeyChar) && e.KeyChar != (char)Keys.Back)

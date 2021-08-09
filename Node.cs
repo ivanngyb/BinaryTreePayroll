@@ -13,9 +13,11 @@ namespace BinaryTreePayroll
 {
     class Node
     {
+        //Node class to hold string data and nodes to its left and right
         private string data;
         private Node left, right;
 
+        //Default constructor
         public Node() { }
         public Node(string data) 
         {
@@ -27,7 +29,8 @@ namespace BinaryTreePayroll
             this.left = left;
             this.right = right;
         }
-
+        #region "Getters and setters"
+        //Encapsulation for node class
         public string gsData
         {
             get => this.data;
@@ -45,5 +48,6 @@ namespace BinaryTreePayroll
             get => this.right;
             set => this.right = value;
         }
+        #endregion
     }
 }

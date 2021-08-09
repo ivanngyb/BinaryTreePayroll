@@ -38,6 +38,7 @@ namespace BinaryTreePayroll
             }
         }
 
+        //Binary tree adds data in recursively
         private Node AddRecursive(Node cur, Node n)
         {
             if (cur == null)
@@ -59,6 +60,7 @@ namespace BinaryTreePayroll
             return cur;
         }
 
+        //Tree gets balanced
         private Node BalanceTree(Node cur)
         {
             int bFactor = BalanceFactor(cur);
@@ -87,6 +89,7 @@ namespace BinaryTreePayroll
             return cur;
         }
 
+        //When data gets deleted the tree automatically balances itself
         public void Delete(string target)
         {
             root = DeleteNode(root, target);
@@ -178,7 +181,8 @@ namespace BinaryTreePayroll
             int bFactor = l - r;
             return bFactor;
         }
-
+        #region "AVL Rotations"
+        //Rotations of an AVL tree
         private Node RotateRR(Node parent)
         {
             Node pivot = parent.gsRight;
@@ -205,7 +209,7 @@ namespace BinaryTreePayroll
             parent.gsRight = RotateLL(pivot);
             return RotateRR(parent);
         }
-
+        #endregion
         private int Max(int l, int r)
         {
             return l > r ? l : r;
@@ -224,7 +228,7 @@ namespace BinaryTreePayroll
 
             return height;
         }
-
+        //Going through AVL tree recursively and finds for target
         public bool Find(string key)
         {
             if (FindRecursive(key, root) != null)
@@ -266,7 +270,7 @@ namespace BinaryTreePayroll
             }
             return null;
         }
-
+        //Displays everything in order
         public string Display(ListBox listBox)
         {
             if (root == null)
