@@ -28,6 +28,7 @@ namespace BinaryTreePayroll
         public void Add(string data)
         {
             Node newItem = new Node(data);
+            //If root is null adds the new node
             if (root == null)
             {
                 root = newItem;
@@ -46,6 +47,7 @@ namespace BinaryTreePayroll
                 cur = n;
                 return cur;
             }
+            //Compares value and balances tree accordingly
             else if (string.Compare(n.gsData, cur.gsData) < 0)
             {
                 cur.gsLeft = AddRecursive(cur.gsLeft, n);
@@ -63,6 +65,7 @@ namespace BinaryTreePayroll
         //Tree gets balanced
         private Node BalanceTree(Node cur)
         {
+            //Balances tree based off it's value
             int bFactor = BalanceFactor(cur);
             if (bFactor > 1)
             {
@@ -107,6 +110,7 @@ namespace BinaryTreePayroll
             {
                 string lowTarget = target.ToLower();
                 string lowData = cur.gsData.ToLower();
+                //Compares data and if found deletes and balances tree accordingly
                 //Left subtree
                 if (string.Compare(lowTarget, lowData) < 0)
                 {
